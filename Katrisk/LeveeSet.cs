@@ -16,6 +16,7 @@ namespace Katrisk
 			name = inputName;
 			_set = new Dictionary<string, Levee>();
 		}
+		public Dictionary<string, Levee> levees { get { return _set; } }
 		public bool addData(string alternative, string[] row)
 		{
 			if (row[0].Equals(_name))
@@ -67,7 +68,30 @@ namespace Katrisk
 				_set.Add(fn, new Levee(name));
 				_set[fn].pointsToData(pointArray);
 			}
-
+		}
+		public Point maxDifference()
+		{
+			double diff = 0.0;
+			if (_set.Values.Count < 2) return new Point(diff, diff);
+			List<List<Point>> stdLevees = new List<List<Point>>();
+			List<double> stpb = _set.Values.Last().standardProbs;
+			foreach (Levee l in _set.Values)
+			{
+				stdLevees.Add(l.getStandardCurve());
+			}
+			double tmp = 0;
+			int idx = 0;
+			for (int i = 0; i < stpb.Count; i++)
+			{
+				// not sure how to deal with many levees...
+				tmp = stdLevees[0][i].Y - stdLevees[1][i].Y;
+				if (diff < tmp)
+				{
+					diff = tmp;
+					idx = i;
+				}
+			}
+			return new Point(stpb[idx],diff);
 		}
 	}
 }

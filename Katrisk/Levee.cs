@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Katrisk
 {
-	class Levee
+	public class Levee
 	{
 		private string _name;
 		private List<Ordinate> _data;
+		private List<double> _standardProbs = new List<double> { .0001, .0002, .0005, .001, .002, .005, .01, .02, .05, .1, .2, .5 };
 		public string name
 		{
 			get
@@ -21,6 +22,8 @@ namespace Katrisk
 				_name = value;
 			}
 		}
+		public List<double> standardProbs{get{return _standardProbs;} }
+		public List<Ordinate> ordinates { get { return _data; } }
 		public Levee(string name)
 		{
 			_name = name;
@@ -66,7 +69,6 @@ namespace Katrisk
 		{
 			List<double> xVals = new List<double>();
 			List<double> yVals = new List<double>();
-			List<double> standardProbs = new List<double>{ .0001, .0002, .0005, .001, .002, .005, .01, .02, .05, .1, .2, .5 };
 			foreach (Ordinate o in _data)
 			{
 				xVals.Add(o.X);
