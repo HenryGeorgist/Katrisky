@@ -12,19 +12,43 @@ namespace Katrisk
 		private double _OEP;//occurance
 		private double _AEP;//annual
 		private bool _valid = true;
+		private List<string> _messages = new List<string>();
 		public bool isValid { get { return _valid; } internal set { _valid = value; } }
 		public double recurranceInterval { get { return _recurranceInterval; } internal set { _recurranceInterval = value; } }
 		public Ordinate(Point p)
 		{
 			_recurranceInterval = p.X;
 			_OEP = p.Y;
+			validate();
 		}
+
+		private void validate()
+		{
+			if (!(_recurranceInterval >= 1))
+			{
+				isValid = false;
+				_messages.Add("Probability is 1 or greater");
+			}
+			if (!(_recurranceInterval < 0))
+			{
+				isValid = false;
+				_messages.Add("Probability is less than 0");
+			}
+			
+			if (!(_OEP < 0))
+			{
+				isValid = false;
+				_messages.Add("Damages are less than 0");
+			}
+		}
+
 		public Ordinate(string[] r)
 		{
 			if (r.Length != 4)
 			{
 				isValid = false;
-				return;
+				_messages.Add("input string from original Katrisk output is not equal to 4 values");
+				//return;
 			}
 			double tmp;
 			if (Double.TryParse(r[1], out tmp))
@@ -35,6 +59,7 @@ namespace Katrisk
 			{
 				//exception?
 				isValid = false;
+				_messages.Add("recurrance interval could not parse to double");
 			}
 			if (Double.TryParse(r[2], out tmp))
 			{
@@ -44,6 +69,7 @@ namespace Katrisk
 			{
 				//exception?
 				isValid = false;
+				_messages.Add("OEP could not parse to double");
 			}
 			if (Double.TryParse(r[3], out tmp))
 			{
@@ -53,10 +79,12 @@ namespace Katrisk
 			{
 				//exception?
 				isValid = false;
+				_messages.Add("AEP could not parse to double");
 			}
+			validate();
 		}
-		private double X { get { return _recurranceInterval; } }
-		private double Y { get { return _OEP; } }
+		public double X { get { return _recurranceInterval; } }
+		public double Y { get { return _OEP; } }
 		public Point convertToPoint()
 		{
 			return new Point(X, Y);

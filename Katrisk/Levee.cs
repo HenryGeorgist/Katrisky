@@ -62,7 +62,45 @@ namespace Katrisk
 		{
 			return computeEP();
 		}
-
+		public List<Point> getStandardCurve()
+		{
+			List<double> xVals = new List<double>();
+			List<double> yVals = new List<double>();
+			List<double> standardProbs = new List<double>{ .0001, .0002, .0005, .001, .002, .005, .01, .02, .05, .1, .2, .5 };
+			foreach (Ordinate o in _data)
+			{
+				xVals.Add(o.X);
+				yVals.Add(o.Y);
+			}
+			List<Point> output = new List<Point>();
+			foreach (double p in standardProbs)
+			{
+				double tmpVal = getValueFromProbability(p, xVals, yVals);
+				output.Add(new Point(p, tmpVal));
+			}
+			return output;
+		}
+		private double getValueFromProbability(double probability, List<double> xVals, List<double> yVals)
+		{
+			//assume sorted monotonically decreasing?
+			int idx = xVals.BinarySearch(probability);
+			if (idx < -1)
+			{
+				idx = -1 * idx - 1;
+				//check range.
+				if (idx == yVals.Count) return yVals.Last();
+				//interpolate
+				return yVals[idx - 1] + (probability - xVals[idx - 1]) / (xVals[idx] - xVals[idx - 1]) * (yVals[idx]- yVals[idx - 1]);
+			}
+			else if (idx == -1)
+			{
+				return yVals[0];
+			}
+			else
+			{
+				return yVals[idx];
+			}
+		}
 		private List<Point> VisvaligamWhyattSimplify(int numToKeep, List<Point> points)
 		{
 			//'http://bost.ocks.org/mike/simplify/

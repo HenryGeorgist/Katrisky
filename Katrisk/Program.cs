@@ -12,7 +12,7 @@ namespace Katrisk
 		{
 			readDataFromFiles();
 			//List<LeveeSet> data = new List<LeveeSet>();
-			//string[] paths = { @"C:\Users\Q0HECWPL\Documents\FEMA\Katrisk_comparison\Agree_v23_FullEP_ByLeveeID.csv" };
+			//string[] paths = { @"C:\Users\Q0HECWPL\Documents\FEMA\Katrisk_comparison\Agree_Orig_FluvialOnly_FullEP_ByLeveeID.csv" };
 			//foreach (string path in paths)
 			//{
 			//	string fn = System.IO.Path.GetFileNameWithoutExtension(path);
@@ -49,12 +49,12 @@ namespace Katrisk
 			//			currentSet.addData(fn, line);
 			//		}
 			//	}
-			//Parallel.For(0, data.Count,
-			//	index =>
-			//	{
-			//		data[index].writeCurve(fn);
-			//	}
-			//);
+			//	Parallel.For(0, data.Count,
+			//		index =>
+			//		{
+			//			data[index].writeCurve(fn);
+			//		}
+			//	);
 			//}
 
 		}
