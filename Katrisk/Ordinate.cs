@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Katrisk
 {
-	class KatriskLine : IComparable<KatriskLine>
+	class Ordinate : IComparable<Ordinate>
 	{
 		private double _recurranceInterval;
 		private double _OEP;//occurance
@@ -14,7 +14,12 @@ namespace Katrisk
 		private bool _valid = true;
 		public bool isValid { get { return _valid; } internal set { _valid = value; } }
 		public double recurranceInterval { get { return _recurranceInterval; } internal set { _recurranceInterval = value; } }
-		public KatriskLine(string[] r)
+		public Ordinate(Point p)
+		{
+			_recurranceInterval = p.X;
+			_OEP = p.Y;
+		}
+		public Ordinate(string[] r)
 		{
 			if (r.Length != 4)
 			{
@@ -50,8 +55,13 @@ namespace Katrisk
 				isValid = false;
 			}
 		}
-
-		int IComparable<KatriskLine>.CompareTo(KatriskLine other)
+		private double X { get { return _recurranceInterval; } }
+		private double Y { get { return _OEP; } }
+		public Point convertToPoint()
+		{
+			return new Point(X, Y);
+		}
+		int IComparable<Ordinate>.CompareTo(Ordinate other)
 		{
 			if (other.recurranceInterval > recurranceInterval) return 1;
 			if (other.recurranceInterval == recurranceInterval) return 0;

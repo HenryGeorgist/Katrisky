@@ -43,8 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="KatriskLine.cs" />
+    <Compile Include="Ordinate.cs" />
     <Compile Include="Levee.cs" />
+    <Compile Include="LeveeSet.cs" />
+    <Compile Include="Point.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
