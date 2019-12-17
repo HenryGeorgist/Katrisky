@@ -10,8 +10,8 @@ namespace Katrisk
 	{
 		static void Main(string[] args)
 		{
-			//readDataFromNewFiles();
-			readDataFromOriginalFile();
+			readDataFromNewFiles();
+			//readDataFromOriginalFile();
 
 		}
 		private static void readDataFromOriginalFile()
@@ -57,18 +57,19 @@ namespace Katrisk
 				Parallel.For(0, data.Count,
 					index =>
 					{
-						foreach (Levee l in data[index].levees.Values)
-						{
-							System.Console.WriteLine("Levee: " + l.name);
-							foreach (Ordinate o in l.ordinates)
-							{
-								foreach (string m in o.messages)
-								{
-									System.Console.WriteLine(m);
-								}
-							}
-						}
-						//data[index].writeCurve(fn);
+						////check for errors in the original files
+						//foreach (Levee l in data[index].levees.Values)
+						//{
+						//	System.Console.WriteLine("Levee: " + l.name);
+						//	foreach (Ordinate o in l.ordinates)
+						//	{
+						//		foreach (string m in o.messages)
+						//		{
+						//			System.Console.WriteLine(m);
+						//		}
+						//	}
+						//}
+						data[index].writeCurve(fn);
 					}
 				);
 			}
@@ -107,7 +108,7 @@ namespace Katrisk
 			foreach (LeveeSet ls in data)
 			{
 				Point diff = ls.maxDifference();
-				if (Math.Abs(diff.Y) > 100)
+				if (Math.Abs(diff.Y) > 0.1)
 				{
 					System.Console.WriteLine("A max difference of " + diff.Y + " occured at probability " + diff.X + " for levee " + ls.name);
 				}

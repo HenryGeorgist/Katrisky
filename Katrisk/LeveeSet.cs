@@ -72,6 +72,7 @@ namespace Katrisk
 		public Point maxDifference()
 		{
 			double diff = 0.0;
+			double diffPer = 0.0;
 			if (_set.Values.Count < 2) return new Point(diff, diff);
 			List<List<Point>> stdLevees = new List<List<Point>>();
 			List<double> stpb = _set.Values.Last().standardProbs;
@@ -84,14 +85,20 @@ namespace Katrisk
 			for (int i = 0; i < stpb.Count; i++)
 			{
 				// not sure how to deal with many levees...
-				tmp = stdLevees[0][i].Y - stdLevees[1][i].Y;
+				double first = stdLevees[0][i].Y;
+				double second = stdLevees[1][i].Y;
+				double max = Math.Max(first, second);
+				double min = Math.Min(first, second);
+
+				tmp =  max - min ;
 				if (diff < tmp)
 				{
 					diff = tmp;
+					diffPer = tmp / max;
 					idx = i;
 				}
 			}
-			return new Point(stpb[idx],diff);
+			return new Point(stpb[idx],diffPer);
 		}
 	}
 }
