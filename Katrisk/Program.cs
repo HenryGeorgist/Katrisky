@@ -10,14 +10,74 @@ namespace Katrisk
 	{
 		static void Main(string[] args)
 		{
-			readDataFromNewFiles();
-			//readDataFromOriginalFile();
 
+			if (args.Length < 2)
+			{
+
+				string process = args[0];
+				if (process.Equals("Simplify"))
+				{
+					string filePath = args[1];
+					if (args.Length < 3)
+					{
+						Console.WriteLine("Need three arguments for Simplify");
+					}
+					else
+					{
+						string directory = args[3];
+						if (!System.IO.Directory.Exists(directory))
+						{
+							Console.WriteLine("Creating " + directory);
+							System.IO.Directory.CreateDirectory(directory);
+						}
+						if (System.IO.File.Exists(filePath))
+						{
+							if (System.IO.Path.GetExtension(filePath).Equals(".csv"))
+							{
+								readDataFromOriginalFile(filePath, directory);
+							}
+							else
+							{
+								System.Console.WriteLine("Expected .csv got " + filePath);
+							}
+						}
+						else
+						{
+							System.Console.WriteLine(filePath + " does not exist");
+						}
+					}
+				}
+				else if (process.Equals("Compare"))
+				{
+					string dir = args[1];
+					if (System.IO.Directory.Exists(dir))
+					{
+						readDataFromNewFiles(dir);
+					}
+					else
+					{
+						System.Console.WriteLine(dir + " does not exist, try Simplify first, or make sure the directory matches the directory you created.");
+					}
+
+
+				}
+				else
+				{
+					Console.WriteLine("Expected Simplify or Compare got: " + args[0]);
+				}
+				Console.WriteLine("Process " + process + " complete");
+			}
+			else
+			{
+				Console.Write("Expected at least 2 arguments, refer to directions and try again");
+			}
+			
+			Console.Read();
 		}
-		private static void readDataFromOriginalFile()
+		private static void readDataFromOriginalFile(string filePath, string directory)
 		{
 			List<LeveeSet> data = new List<LeveeSet>();
-			string[] paths = { @"C:\Users\Q0HECWPL\Documents\FEMA\Katrisk_comparison\Agree_Orig_FluvialOnly_FullEP_ByLeveeID.csv" };
+			string[] paths = { filePath };
 			foreach (string path in paths)
 			{
 				string fn = System.IO.Path.GetFileNameWithoutExtension(path);
@@ -69,14 +129,14 @@ namespace Katrisk
 						//		}
 						//	}
 						//}
-						data[index].writeCurve(fn);
+						data[index].writeCurve(fn, directory);
 					}
 				);
 			}
 		}
-		private static void readDataFromNewFiles()
+		private static void readDataFromNewFiles(string directory)
 		{
-			string directory = @"C:\Temp\KRisk\";
+
 			List<LeveeSet> data = new List<LeveeSet>();
 			IEnumerable<string> alts = System.IO.Directory.EnumerateDirectories(directory);
 			foreach (string a in alts)
@@ -113,7 +173,7 @@ namespace Katrisk
 					System.Console.WriteLine("A max difference of " + diff.Y + " occured at probability " + diff.X + " for levee " + ls.name);
 				}
 			}
-			Console.Read();
+			//Console.Read();
 		}
 	}
 }
