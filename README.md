@@ -3,6 +3,8 @@
 A simple project to read in an aggregate report that summarizes output from Katrisk runs to facilitate the comparison of various experiments that facilitate the understanding of how Katrisk models levees.
 
 To make this program run please follow these steps:
+Download the program from the files above, Katrisk/bin/debug/Katrisk.exe
+store that on your computer. where ever you store this, remember the path you use, it will be required in later steps.
 Launch cmd - go to the search icon and type in cmd, select cmd.exe and double click.
 
 You should see an old fashioned command prompt. 
