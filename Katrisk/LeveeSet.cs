@@ -30,11 +30,11 @@ namespace Katrisk
 			return false;
 		}
 
-		internal void writeCurve(string fn)
+		internal void writeCurve(string fn, string directory)
 		{
 			string fName = name.Replace("\"", "");
 			fName = fName.Replace(";", "-");
-			string path = @"C:\Temp\KRisk\" + fn + "\\";
+			string path = directory + fn + "\\";
 			if (!System.IO.Directory.Exists(path)) { System.IO.Directory.CreateDirectory(path); }
 			if (!System.IO.File.Exists(path + fName + ".csv"))
 			{

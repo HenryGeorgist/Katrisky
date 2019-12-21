@@ -11,10 +11,11 @@ namespace Katrisk
 		static void Main(string[] args)
 		{
 
-			if (args.Length < 2)
+			if (args.Length > 2)
 			{
 
 				string process = args[0];
+				Console.WriteLine(process);
 				if (process.Equals("Simplify"))
 				{
 					string filePath = args[1];
@@ -24,7 +25,7 @@ namespace Katrisk
 					}
 					else
 					{
-						string directory = args[3];
+						string directory = args[2];
 						if (!System.IO.Directory.Exists(directory))
 						{
 							Console.WriteLine("Creating " + directory);
